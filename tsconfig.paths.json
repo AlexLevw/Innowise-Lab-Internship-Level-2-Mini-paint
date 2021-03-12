@@ -8,7 +8,9 @@
       "@constants/*": ["./src/constants/*"],
       "@assets/*": ["./src/assets/*"],
       "@contexts/*": ["./src/contexts/*"],
-      "@events/*": ["./src/events/*"]
+      "@events/*": ["./src/events/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   }
 }
