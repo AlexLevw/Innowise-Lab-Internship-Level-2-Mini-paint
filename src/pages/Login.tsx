@@ -6,7 +6,7 @@ import {
   REGISTER_ROUTE,
 } from "@constants/routes";
 import { useAuth } from "@contexts/AuthContext";
-import ErrorMassage from "@components/ErrorMessage";
+import { ErrorMessage } from "@components/index";
 
 export default function Login(): JSX.Element {
   const emailRef = useRef<HTMLInputElement>({} as HTMLInputElement);
@@ -35,7 +35,7 @@ export default function Login(): JSX.Element {
 
   return (
     <div className="auth_wrap">
-      {error && <ErrorMassage massage={error} />}
+      {error && <ErrorMessage massage={error} />}
       <div className="auth_container">
         <p className="auth_title">Login</p>
         <form className="auth_form" onSubmit={handleSubmit}>

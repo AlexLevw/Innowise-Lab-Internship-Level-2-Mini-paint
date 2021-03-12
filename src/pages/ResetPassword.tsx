@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { LOGIN_ROUTE, REGISTER_ROUTE } from "@constants/routes";
 import { useAuth } from "@contexts/AuthContext";
-import ErrorMassage from "@components/ErrorMessage";
+import { ErrorMessage } from "@components/index";
 
 export default function ResetPassword(): JSX.Element {
   const emailRef = useRef<HTMLInputElement>({} as HTMLInputElement);
@@ -27,7 +27,7 @@ export default function ResetPassword(): JSX.Element {
 
   return (
     <div className="auth_wrap">
-      {error && <ErrorMassage massage={error} />}
+      {error && <ErrorMessage massage={error} />}
       <div className="auth_container">
         <p className="auth_title">Reset Password</p>
         <form className="auth_form" onSubmit={handleSubmit}>

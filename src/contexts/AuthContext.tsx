@@ -10,14 +10,8 @@ declare global {
 
 interface IAuthContextValue {
   currentUser: firebase.User;
-  signup: (
-    email: string,
-    password: string
-  ) => Promise<firebase.auth.UserCredential>;
-  login: (
-    email: string,
-    password: string
-  ) => Promise<firebase.auth.UserCredential>;
+  signup: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   updateEmail: (email: string) => Promise<void>;
@@ -42,17 +36,13 @@ export function AuthProvider({ children }: IAuthProviderProps): JSX.Element {
   );
   const [loading, setLoading] = useState<boolean>(true);
 
-  const signup = (
-    email: string,
-    password: string
-  ): Promise<firebase.auth.UserCredential> =>
-    auth.createUserWithEmailAndPassword(email, password);
+  const signup = async (email: string, password: string): Promise<void> => {
+    await auth.createUserWithEmailAndPassword(email, password);
+  };
 
-  const login = (
-    email: string,
-    password: string
-  ): Promise<firebase.auth.UserCredential> =>
-    auth.signInWithEmailAndPassword(email, password);
+  const login = async (email: string, password: string): Promise<void> => {
+    await auth.signInWithEmailAndPassword(email, password);
+  };
 
   const logout = (): Promise<void> => auth.signOut();
 

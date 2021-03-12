@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { HOME_ROUTE, LOGIN_ROUTE } from "@constants/routes";
 import { useAuth } from "@contexts/index";
-import ErrorMassage from "@components/ErrorMessage";
+import { ErrorMessage } from "@components/index";
 
 export default function Registration(): JSX.Element {
   const emailRef = useRef<HTMLInputElement>({} as HTMLInputElement);
@@ -38,7 +38,7 @@ export default function Registration(): JSX.Element {
 
   return (
     <div className="auth_wrap">
-      {error && <ErrorMassage massage={error} />}
+      {error && <ErrorMessage massage={error} />}
       <div className="auth_container">
         <p className="auth_title">Sign up</p>
         <form className="auth_form" onSubmit={handleSubmit}>
