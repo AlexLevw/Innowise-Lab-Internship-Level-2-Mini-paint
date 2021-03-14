@@ -10,7 +10,8 @@
       "@contexts/*": ["./src/contexts/*"],
       "@events/*": ["./src/events/*"],
       "@routes/*": ["./src/routes/*"],
-      "@styles/*": ["./src/styles/*"]
+      "@styles/*": ["./src/styles/*"],
+      "@reducers/*": ["./src/reducers/*"]
     }
   }
 }

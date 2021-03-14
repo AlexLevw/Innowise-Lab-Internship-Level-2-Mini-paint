@@ -6,6 +6,7 @@ import { ErrorMessage } from "@components/index";
 
 export default function Registration(): JSX.Element {
   const emailRef = useRef<HTMLInputElement>({} as HTMLInputElement);
+  const usernameRef = useRef<HTMLInputElement>({} as HTMLInputElement);
   const passwordRef = useRef<HTMLInputElement>({} as HTMLInputElement);
   const confirmPasswordRef = useRef<HTMLInputElement>({} as HTMLInputElement);
   const [error, setError] = useState<string>("");
@@ -16,13 +17,14 @@ export default function Registration(): JSX.Element {
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
     const email: string = emailRef.current.value;
+    const username: string = usernameRef.current.value;
     const password: string = passwordRef.current.value;
     const passwordConfirm: string = confirmPasswordRef.current.value;
 
     setError("");
     if (password === passwordConfirm) {
       setLoading(true);
-      signup(email, password)
+      signup(email, username, password)
         .then(() => {
           history.push(HOME_ROUTE);
         })
@@ -47,6 +49,13 @@ export default function Registration(): JSX.Element {
             ref={emailRef}
             type="text"
             placeholder="e-mail"
+            required
+          />
+          <input
+            className="auth_t-input"
+            ref={usernameRef}
+            type="text"
+            placeholder="user-name"
             required
           />
           <input

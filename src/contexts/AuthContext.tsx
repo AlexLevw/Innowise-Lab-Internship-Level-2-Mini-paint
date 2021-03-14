@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import firebase from "firebase";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
 declare global {
   interface Window {
@@ -10,7 +10,7 @@ declare global {
 
 interface IAuthContextValue {
   currentUser: firebase.User;
-  signup: (email: string, password: string) => Promise<void>;
+  signup: (email: string, username: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
@@ -36,8 +36,33 @@ export function AuthProvider({ children }: IAuthProviderProps): JSX.Element {
   );
   const [loading, setLoading] = useState<boolean>(true);
 
-  const signup = async (email: string, password: string): Promise<void> => {
-    await auth.createUserWithEmailAndPassword(email, password);
+  const signup = async (
+    email: string,
+    username: string,
+    password: string
+  ): Promise<void> => {
+    await db
+      .doc(`/users/${username}`)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          throw new Error("This username is already taken ");
+        } else {
+          return auth.createUserWithEmailAndPassword(email, password);
+        }
+      })
+      .then((data) => {
+        if (data.user === null) {
+          throw new Error("Error while creating user ");
+        } else {
+          const userId = data.user.uid;
+          const userCredentials = {
+            username,
+            userId,
+          };
+          db.doc(`/users/${username}`).set(userCredentials);
+        }
+      });
   };
 
   const login = async (email: string, password: string): Promise<void> => {
