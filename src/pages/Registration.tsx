@@ -1,8 +1,10 @@
 import React, { useRef, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { HOME_ROUTE, LOGIN_ROUTE } from "@constants/routes";
-import { useAuth } from "@contexts/index";
-import { ErrorMessage } from "@components/index";
+import { Link, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { routeConstants } from "@constants";
+import { ErrorMessage } from "@components";
+import { authActions } from "@store/auth";
+import { CommonState } from "@store";
 
 export default function Registration(): JSX.Element {
   const emailRef = useRef<HTMLInputElement>({} as HTMLInputElement);
@@ -11,8 +13,10 @@ export default function Registration(): JSX.Element {
   const confirmPasswordRef = useRef<HTMLInputElement>({} as HTMLInputElement);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const { signup } = useAuth();
-  const history = useHistory();
+  const dispatch = useDispatch();
+  const isAuthorization = useSelector(
+    (state: CommonState) => state.auth.isAuthorization
+  );
 
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
@@ -24,18 +28,15 @@ export default function Registration(): JSX.Element {
     setError("");
     if (password === passwordConfirm) {
       setLoading(true);
-      signup(email, username, password)
-        .then(() => {
-          history.push(HOME_ROUTE);
-        })
-        .catch(() => {
-          setError("Password do not match");
-          setLoading(false);
-        });
+      dispatch(authActions.signup(email, username, password));
     } else {
       setError("Password do not match");
       setLoading(false);
     }
+  }
+
+  if (isAuthorization) {
+    return <Redirect to={routeConstants.HOME_ROUTE} />;
   }
 
   return (
@@ -78,7 +79,7 @@ export default function Registration(): JSX.Element {
         </form>
         <div className="auth_bottom">
           <p className="auth_bottom__title">Already have an account?</p>
-          <Link className="auth_bottom__link" to={LOGIN_ROUTE}>
+          <Link className="auth_bottom__link" to={routeConstants.LOGIN_ROUTE}>
             Log in
           </Link>
         </div>

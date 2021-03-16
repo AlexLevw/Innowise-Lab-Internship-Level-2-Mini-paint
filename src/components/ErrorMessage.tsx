@@ -1,12 +1,10 @@
 import React from "react";
 
-interface IErrorMessageProps {
+interface Props {
   massage: string;
 }
 
-export default function ErrorMessage({
-  massage,
-}: IErrorMessageProps): JSX.Element {
+export default function ErrorMessage({ massage }: Props): JSX.Element {
   return (
     <div className="error_container">
       <div>{massage}</div>

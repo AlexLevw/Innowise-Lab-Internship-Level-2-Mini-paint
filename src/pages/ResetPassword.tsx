@@ -1,28 +1,30 @@
 import React, { useRef, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { LOGIN_ROUTE, REGISTER_ROUTE } from "@constants/routes";
-import { useAuth } from "@contexts/AuthContext";
-import { ErrorMessage } from "@components/index";
+import { Link, Redirect } from "react-router-dom";
+import { routeConstants } from "@constants";
+import { useDispatch, useSelector } from "react-redux";
+import { ErrorMessage } from "@components";
+import { authActions } from "@store/auth";
+import { CommonState } from "@store";
 
 export default function ResetPassword(): JSX.Element {
   const emailRef = useRef<HTMLInputElement>({} as HTMLInputElement);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const { resetPassword } = useAuth();
-  const history = useHistory();
+  const dispatch = useDispatch();
+  const isAuthorization = useSelector(
+    (state: CommonState) => state.auth.isAuthorization
+  );
 
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
     const email: string = emailRef.current.value;
     setLoading(true);
-    resetPassword(email)
-      .then(() => {
-        history.push(LOGIN_ROUTE);
-      })
-      .catch(() => {
-        setError("An error has occurred!");
-        setLoading(false);
-      });
+    setError("");
+    dispatch(authActions.resetPassword(email));
+  }
+
+  if (isAuthorization) {
+    return <Redirect to={routeConstants.HOME_ROUTE} />;
   }
 
   return (
@@ -42,12 +44,15 @@ export default function ResetPassword(): JSX.Element {
             SEND
           </button>
         </form>
-        <Link className="auth_link" to={LOGIN_ROUTE}>
+        <Link className="auth_link" to={routeConstants.LOGIN_ROUTE}>
           Log in
         </Link>
         <div className="auth_bottom">
           <p className="auth_bottom__title">Need an account?</p>
-          <Link className="auth_bottom__link" to={REGISTER_ROUTE}>
+          <Link
+            className="auth_bottom__link"
+            to={routeConstants.REGISTER_ROUTE}
+          >
             Sign up
           </Link>
         </div>

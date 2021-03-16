@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { HOME_ROUTE, PROFILE_ROUTE } from "@constants/routes";
+import { routeConstants } from "@constants";
 import styles from "./_Header.module.scss";
 
 export default function Header(): JSX.Element {
@@ -10,14 +10,20 @@ export default function Header(): JSX.Element {
   return (
     <div className={styles.container}>
       <Link
-        className={styles.link + (pathName === HOME_ROUTE ? " active" : "")}
-        to={HOME_ROUTE}
+        className={
+          styles.link +
+          (pathName === routeConstants.HOME_ROUTE ? " active" : "")
+        }
+        to={routeConstants.HOME_ROUTE}
       >
         Home
       </Link>
       <Link
-        className={styles.link + (pathName === PROFILE_ROUTE ? " active" : "")}
-        to={PROFILE_ROUTE}
+        className={
+          styles.link +
+          (pathName === routeConstants.PROFILE_ROUTE ? " active" : "")
+        }
+        to={routeConstants.PROFILE_ROUTE}
       >
         Profile
       </Link>

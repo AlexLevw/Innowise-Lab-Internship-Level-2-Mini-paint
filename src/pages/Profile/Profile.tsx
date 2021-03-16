@@ -1,17 +1,18 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useAuth } from "@contexts/index";
-import { Header } from "@components/index";
-import { LOGIN_ROUTE } from "@constants/routes";
+import { useDispatch } from "react-redux";
+import { Header } from "@components";
+import { routeConstants } from "@constants";
+import { authActions } from "@store/auth";
 import styles from "./_Profile.module.scss";
 
 export default function Profile(): JSX.Element {
-  const { logout } = useAuth();
+  const dispatch = useDispatch();
   const history = useHistory();
 
   function handleLogOut(): void {
-    logout();
-    history.push(LOGIN_ROUTE);
+    dispatch(authActions.logout());
+    history.push(routeConstants.LOGIN_ROUTE);
   }
 
   return (

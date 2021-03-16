@@ -1,7 +1,8 @@
 import React from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
-import { useAuth } from "@contexts/index";
-import { LOGIN_ROUTE } from "@constants/routes";
+import { routeConstants } from "@constants";
+import { useSelector } from "react-redux";
+import { CommonState } from "@store";
 
 interface IPrivateRouteProps {
   component: () => JSX.Element;
@@ -12,13 +13,19 @@ export default function PrivateRoute({
   component: Component,
   path,
 }: IPrivateRouteProps & RouteProps): JSX.Element {
-  const { currentUser } = useAuth();
+  const isAuthorization = useSelector(
+    (store: CommonState) => store.auth.isAuthorization
+  );
 
   return (
     <Route
       path={path}
       render={(): React.ReactNode => {
-        return currentUser.uid ? <Component /> : <Redirect to={LOGIN_ROUTE} />;
+        return isAuthorization ? (
+          <Component />
+        ) : (
+          <Redirect to={routeConstants.LOGIN_ROUTE} />
+        );
       }}
     />
   );
