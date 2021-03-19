@@ -6,11 +6,15 @@ $FONT_SIZE: 16px;
   box-sizing: border-box;
 }
 
-body {
-  width: 100vw;
-  height: 100vh;
+html, body, .App, #root {
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+}
+
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -26,13 +30,10 @@ code {
     monospace;
 }
 
-.App {
-  width: 100vw;
-  height: 100vh;
-}
-
 .App_main {
   max-width: 762px;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
 }

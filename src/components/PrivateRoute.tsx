@@ -3,6 +3,7 @@ import { Redirect, Route, RouteProps } from "react-router-dom";
 import { routeConstants } from "@constants";
 import { useSelector } from "react-redux";
 import { CommonState } from "@store";
+import { Header } from "@components";
 
 interface IPrivateRouteProps {
   component: () => JSX.Element;
@@ -22,7 +23,10 @@ export default function PrivateRoute({
       path={path}
       render={(): React.ReactNode => {
         return isAuthorization ? (
-          <Component />
+          <>
+            <Header />
+            <Component />
+          </>
         ) : (
           <Redirect to={routeConstants.LOGIN_ROUTE} />
         );

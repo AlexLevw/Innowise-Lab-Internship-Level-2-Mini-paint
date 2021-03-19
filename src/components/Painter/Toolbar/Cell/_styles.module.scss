@@ -1,0 +1,51 @@
+$green: green;
+$blue: blue;
+$red: red;
+$yellow: yellow;
+$purple: purple;
+
+.cell {
+  width: 47px;
+  border-right: 2px #555 solid;
+  background-color: #333;
+}
+
+.cellBtn {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  background-color: rgba($color: #000000, $alpha: .0);
+  color: white;
+}
+
+.selectedColor {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgb(140, 140, 140);
+  border-radius: 50%;
+
+  &:global(.black) {
+    background-color: black;
+  }
+  &:global(.white) {
+    background-color: white;
+  }
+  &:global(.green) {
+    background-color: $green;
+  }
+  &:global(.red) {
+    background-color: $red;
+  }
+  &:global(.blue) {
+    background-color: $blue;
+  }
+  &:global(.yellow) {
+    background-color: $yellow;
+  }
+  &:global(.purple) {
+    background-color: $purple;
+  }
+}

@@ -1,8 +1,15 @@
 import React from "react";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { routeConstants } from "@constants";
-import PrivateRoute from "@routes";
-import { Home, Profile, Login, Registration, ResetPassword } from "@pages";
+import { PrivateRoute } from "@components";
+import {
+  HomePage,
+  PainterPage,
+  ProfilePage,
+  LoginPage,
+  RegistrationPage,
+  ResetPasswordPage,
+} from "@pages";
 
 export default function App(): JSX.Element {
   return (
@@ -10,23 +17,27 @@ export default function App(): JSX.Element {
       <div className="App_main">
         <Router>
           <Switch>
-            <Route path={routeConstants.LOGIN_ROUTE} component={Login} />
+            <Route path={routeConstants.LOGIN_ROUTE} component={LoginPage} />
             <Route
               path={routeConstants.REGISTER_ROUTE}
-              component={Registration}
+              component={RegistrationPage}
             />
             <Route
               path={routeConstants.RESET_PASSWORD_ROUTE}
-              component={ResetPassword}
+              component={ResetPasswordPage}
             />
             <PrivateRoute
               path={routeConstants.PROFILE_ROUTE}
-              component={Profile}
+              component={ProfilePage}
             />
             <PrivateRoute
               exact
               path={routeConstants.HOME_ROUTE}
-              component={Home}
+              component={HomePage}
+            />
+            <PrivateRoute
+              path={routeConstants.PAINTER_ROUTE}
+              component={PainterPage}
             />
           </Switch>
         </Router>

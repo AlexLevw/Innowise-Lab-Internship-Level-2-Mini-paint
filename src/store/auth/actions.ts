@@ -7,7 +7,7 @@ function signup(
   email: string,
   username: string,
   password: string
-): (dispatch: Dispatch) => void {
+): CallableFunction {
   return (dispatch: Dispatch): void => {
     authService.signup(email, username, password).then((user) => {
       localStorage.setItem("user", JSON.stringify(user));
@@ -19,7 +19,7 @@ function signup(
   };
 }
 
-function login(email: string, password: string) {
+function login(email: string, password: string): CallableFunction {
   return (dispatch: Dispatch): void => {
     authService.login(email, password).then((user) => {
       localStorage.setItem("user", JSON.stringify(user));
@@ -31,7 +31,7 @@ function login(email: string, password: string) {
   };
 }
 
-function logout() {
+function logout(): CallableFunction {
   return (dispatch: Dispatch): void => {
     authService.logout().then(() => {
       localStorage.removeItem("user");
@@ -42,7 +42,7 @@ function logout() {
   };
 }
 
-function resetPassword(email: string) {
+function resetPassword(email: string): CallableFunction {
   return (dispatch: Dispatch): void => {
     authService.resetPassword(email).then(() => {
       dispatch({
@@ -52,7 +52,10 @@ function resetPassword(email: string) {
   };
 }
 
-function updateEmail(currentUser: firebase.User, email: string) {
+function updateEmail(
+  currentUser: firebase.User,
+  email: string
+): CallableFunction {
   return (dispatch: Dispatch): void => {
     authService.updateEmail(currentUser, email).then(() => {
       dispatch({
@@ -62,7 +65,10 @@ function updateEmail(currentUser: firebase.User, email: string) {
   };
 }
 
-function updatePassword(currentUser: firebase.User, newPassword: string) {
+function updatePassword(
+  currentUser: firebase.User,
+  newPassword: string
+): CallableFunction {
   return (dispatch: Dispatch): void => {
     authService.updatePassword(currentUser, newPassword).then(() => {
       dispatch({

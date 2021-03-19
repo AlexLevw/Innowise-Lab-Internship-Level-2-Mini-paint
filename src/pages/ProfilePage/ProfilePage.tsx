@@ -1,12 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Header } from "@components";
 import { routeConstants } from "@constants";
 import { authActions } from "@store/auth";
-import styles from "./_Profile.module.scss";
+import styles from "./_styles.module.scss";
 
-export default function Profile(): JSX.Element {
+export default function ProfilePage(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -17,7 +16,6 @@ export default function Profile(): JSX.Element {
 
   return (
     <div className={styles.wrapper}>
-      <Header />
       <div className={styles.container}>
         <div className={styles.main}>
           <div className={styles.main_top}>
