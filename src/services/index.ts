@@ -1,3 +1,4 @@
-import authService from "./authService";
+import authService from "./authServices";
+import dbServices from "./dbServices";
 
-export default authService;
+export { authService, dbServices };

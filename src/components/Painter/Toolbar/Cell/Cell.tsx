@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
-import { PainterState } from "@store/painter";
+import { CommonState } from "@store";
 import { painterConstants } from "@constants";
 import Panel from "./Panel/Panel";
 import styles from "./_styles.module.scss";
@@ -11,7 +11,7 @@ interface CellProps {
 
 function ColorCellInner(): JSX.Element {
   const brushColorState: string = useSelector(
-    (state: PainterState) => state.brushColor
+    (state: CommonState) => state.painter.brushColor
   );
 
   return <div className={`${styles.selectedColor} ${brushColorState}`}> </div>;
@@ -19,7 +19,7 @@ function ColorCellInner(): JSX.Element {
 
 function SizeCellInner(): JSX.Element {
   const brushSizeState: number = useSelector(
-    (state: PainterState) => state.brushSize
+    (state: CommonState) => state.painter.brushSize
   );
   return <div className={styles.selectedSize}>{brushSizeState}px</div>;
 }

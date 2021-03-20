@@ -95,4 +95,8 @@ export default class Drawing {
   public setBrushSize(size: number): void {
     this.brushSize = size;
   }
+
+  public getDrawingURL(): string {
+    return this.ctx.canvas.toDataURL();
+  }
 }

@@ -2,13 +2,17 @@ import { createStore, applyMiddleware, Store, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import { authReducer, AuthState } from "./auth";
-import { painterReducer } from "./painter";
+import { painterReducer, PainterState } from "./painter";
 
 export type CommonState = {
   auth: AuthState;
+  painter: PainterState;
 };
 
-const rootReducer = combineReducers({ auth: authReducer });
+const rootReducer = combineReducers({
+  auth: authReducer,
+  painter: painterReducer,
+});
 
 const initStore = (): Store => {
   const store: Store = createStore(
@@ -18,12 +22,4 @@ const initStore = (): Store => {
   return store;
 };
 
-const initPainterStor = (): Store => {
-  const store: Store = createStore(
-    painterReducer,
-    composeWithDevTools(applyMiddleware(thunk))
-  );
-  return store;
-};
-
-export { initStore, initPainterStor };
+export { initStore };

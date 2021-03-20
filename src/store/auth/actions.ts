@@ -1,7 +1,8 @@
-import { authConstants } from "@constants";
-import authService from "@services";
 import { Dispatch } from "redux";
 import firebase from "firebase";
+import { authConstants } from "@constants";
+import { authService, dbServices } from "@services";
+import { User } from "@store/auth/types";
 
 function signup(
   email: string,
@@ -9,7 +10,11 @@ function signup(
   password: string
 ): CallableFunction {
   return (dispatch: Dispatch): void => {
-    authService.signup(email, username, password).then((user) => {
+    authService.signup(email, username, password).then((fbUser) => {
+      const user: User = {
+        fbUser,
+        username,
+      };
       localStorage.setItem("user", JSON.stringify(user));
       dispatch({
         type: authConstants.SIGNUP,
@@ -21,11 +26,17 @@ function signup(
 
 function login(email: string, password: string): CallableFunction {
   return (dispatch: Dispatch): void => {
-    authService.login(email, password).then((user) => {
-      localStorage.setItem("user", JSON.stringify(user));
-      dispatch({
-        type: authConstants.LOGIN,
-        user,
+    authService.login(email, password).then((fbUser) => {
+      dbServices.getUserData(fbUser.uid).then((userData) => {
+        const user: User = {
+          fbUser,
+          username: userData.username,
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+        dispatch({
+          type: authConstants.LOGIN,
+          user,
+        });
       });
     });
   };

@@ -1,8 +1,6 @@
 import React, { useRef, useEffect } from "react";
-import { Provider } from "react-redux";
-import { Store } from "redux";
-import { initPainterStor } from "@store";
 import Drawing from "./Drawing";
+import PainterTop from "./PainterTop/PainterTop";
 import Toolbar from "./Toolbar/Toolbar";
 import styles from "./_styles.module.scss";
 
@@ -11,8 +9,6 @@ declare global {
     drawing: Drawing | null;
   }
 }
-
-const painterStor: Store = initPainterStor();
 
 export default function Painter(): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>({} as HTMLCanvasElement);
@@ -25,13 +21,12 @@ export default function Painter(): JSX.Element {
   }, [canvasRef]);
 
   return (
-    <Provider store={painterStor}>
-      <div className={styles.container}>
-        <div className={styles.canvasWrapper}>
-          <canvas ref={canvasRef} />
-        </div>
-        <Toolbar />
+    <div className={styles.container}>
+      <PainterTop />
+      <div className={styles.canvasWrapper}>
+        <canvas ref={canvasRef} />
       </div>
-    </Provider>
+      <Toolbar />
+    </div>
   );
 }

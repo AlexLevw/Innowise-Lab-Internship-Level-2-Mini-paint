@@ -1,11 +1,5 @@
-import firebase from "firebase";
 import { authConstants } from "@constants";
-import { AuthState } from "./types";
-
-interface IAction {
-  type: string;
-  user: firebase.User;
-}
+import { AuthState, Action } from "./types";
 
 const user = localStorage.getItem("user");
 
@@ -15,7 +9,7 @@ const initialState = user
 
 const authReducer = (
   state: AuthState = initialState,
-  action: IAction
+  action: Action
 ): AuthState => {
   switch (action.type) {
     case authConstants.SIGNUP:
