@@ -30,22 +30,17 @@ export default class Drawing {
 
     canvas.addEventListener("mousedown", this.touch.bind(this));
     canvas.addEventListener("touchstart", this.touch.bind(this));
-
     canvas.addEventListener("mouseup", this.stopTouch.bind(this));
     canvas.addEventListener("touchend", this.stopTouch.bind(this));
-
     canvas.addEventListener("mousemove", this.putPoint.bind(this));
     canvas.addEventListener("touchmove", this.putPoint.bind(this));
 
-    window.addEventListener("resize", this.resize.bind(this));
-
-    this.resize();
-  }
-
-  private resize() {
     this.ctx.canvas.width = this.container.offsetWidth;
     this.ctx.canvas.height = this.container.offsetHeight;
     this.canvasRect = this.ctx.canvas.getBoundingClientRect();
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   private touch(e: MouseEvent | TouchEvent) {

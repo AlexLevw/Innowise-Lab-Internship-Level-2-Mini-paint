@@ -1,20 +1,7 @@
 import firebase from "firebase";
 import uniqid from "uniqid";
 import { db } from "@src/firebase";
-
-async function saveImageData(
-  userId: string,
-  username: string,
-  drawingUrl: string
-): Promise<void> {
-  const drawingId = uniqid();
-  const drawingData = {
-    userId,
-    username,
-    drawingUrl,
-  };
-  db.doc(`/drawings/${drawingId}`).set(drawingData);
-}
+import { DrawingData } from "./types";
 
 async function getUserData(
   userId: string
@@ -30,4 +17,32 @@ async function getUserData(
   return userData;
 }
 
-export default { saveImageData, getUserData };
+async function saveImageData(
+  userId: string,
+  username: string,
+  drawingUrl: string
+): Promise<void> {
+  const drawingId = uniqid();
+  const drawingData: DrawingData = {
+    userId,
+    username,
+    drawingUrl,
+    drawingId,
+  };
+  db.doc(`/drawings/${drawingId}`).set(drawingData);
+}
+
+async function getImages(): Promise<DrawingData[]> {
+  const images: DrawingData[] = [];
+  await db
+    .collection("/drawings/")
+    .get()
+    .then((QuerySnapshot) => {
+      QuerySnapshot.forEach((data) => {
+        images.push(<DrawingData>data.data());
+      });
+    });
+  return images;
+}
+
+export default { getUserData, saveImageData, getImages };
