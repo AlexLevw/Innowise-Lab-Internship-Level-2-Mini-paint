@@ -1,12 +1,12 @@
 import { Dispatch } from "redux";
 import { painterConstants } from "@constants";
 
-function setBrushColor(color: string): CallableFunction {
+function setToolColor(color: string): CallableFunction {
   return (despatch: Dispatch) => {
-    window.drawing?.setBrushColor(color);
+    window.drawing?.setToolColor(color);
     despatch({
       type: painterConstants.actions.SET_COLOR,
-      brushColor: color,
+      toolColor: color,
     });
   };
 }
@@ -21,4 +21,14 @@ function setBrushSize(size: number): CallableFunction {
   };
 }
 
-export default { setBrushColor, setBrushSize };
+function setToolType(toolType: string): CallableFunction {
+  return (despatch: Dispatch) => {
+    window.drawing?.setToolType(toolType);
+    despatch({
+      type: painterConstants.actions.SET_TOOL_TYPE,
+      toolType,
+    });
+  };
+}
+
+export default { setToolColor, setBrushSize, setToolType };

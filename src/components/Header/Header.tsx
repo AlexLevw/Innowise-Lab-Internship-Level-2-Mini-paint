@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { routeConstants } from "@constants";
-import profileUserIcon from "@assets/icons/profile-user.svg";
+import { profileIcon } from "@assets/icons";
 import styles from "./_styles.module.scss";
 
 export default function Header(): JSX.Element {
@@ -35,7 +35,7 @@ export default function Header(): JSX.Element {
         }
         to={routeConstants.PROFILE_ROUTE}
       >
-        <img src={profileUserIcon} alt="user" />
+        <img src={profileIcon} alt="user" />
       </Link>
     </div>
   );

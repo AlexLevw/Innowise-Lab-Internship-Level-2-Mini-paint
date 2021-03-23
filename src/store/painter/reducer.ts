@@ -1,7 +1,11 @@
 import { painterConstants } from "@constants";
 import { PainterState, PainterAction } from "./types";
 
-const initialState: PainterState = { brushColor: "black", brushSize: 10 };
+const initialState: PainterState = {
+  toolColor: painterConstants.TOOL_COLORS[0],
+  brushSize: 10,
+  toolType: painterConstants.BRUSH,
+};
 
 const painterReducer = (
   state: PainterState = initialState,
@@ -10,9 +14,23 @@ const painterReducer = (
   const actionTypes = painterConstants.actions;
   switch (action.type) {
     case actionTypes.SET_COLOR:
-      return { brushColor: action.brushColor, brushSize: state.brushSize };
+      return {
+        toolColor: action.toolColor,
+        brushSize: state.brushSize,
+        toolType: state.toolType,
+      };
     case actionTypes.SET_SIZE:
-      return { brushColor: state.brushColor, brushSize: action.brushSize };
+      return {
+        toolColor: state.toolColor,
+        brushSize: action.brushSize,
+        toolType: state.toolType,
+      };
+    case actionTypes.SET_TOOL_TYPE:
+      return {
+        toolColor: state.toolColor,
+        brushSize: state.brushSize,
+        toolType: action.toolType,
+      };
     default:
       return state;
   }

@@ -7,7 +7,7 @@ function signup(
   password: string
 ): Promise<firebase.User> {
   return db
-    .doc(`/users/${username}`)
+    .doc(`/users/${email}`)
     .get()
     .then((doc) => {
       if (doc.exists) {
@@ -25,7 +25,7 @@ function signup(
           username,
           userId,
         };
-        await db.doc(`/users/${username}`).set(userCredentials);
+        await db.doc(`/users/${email}`).set(userCredentials);
         return data.user;
       }
     });

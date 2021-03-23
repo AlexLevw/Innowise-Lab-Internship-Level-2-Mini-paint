@@ -1,14 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { routeConstants } from "@constants";
 import { useDispatch, useSelector } from "react-redux";
-import { ErrorMessage } from "@components";
 import { authActions } from "@store/auth";
 import { CommonState } from "@store";
+import { EmailInput, SubmitBtn } from "@components/auth";
 
 export default function ResetPassword(): JSX.Element {
-  const emailRef = useRef<HTMLInputElement>({} as HTMLInputElement);
-  const [error, setError] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isAuthorization = useSelector(
@@ -17,9 +16,7 @@ export default function ResetPassword(): JSX.Element {
 
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
-    const email: string = emailRef.current.value;
     setLoading(true);
-    setError("");
     dispatch(authActions.resetPassword(email));
   }
 
@@ -29,20 +26,11 @@ export default function ResetPassword(): JSX.Element {
 
   return (
     <div className="auth_wrap">
-      {error && <ErrorMessage massage={error} />}
       <div className="auth_container">
         <p className="auth_title">Reset Password</p>
         <form className="auth_form" onSubmit={handleSubmit}>
-          <input
-            className="auth_t-input"
-            ref={emailRef}
-            type="text"
-            placeholder="e-mail"
-            required
-          />
-          <button className="auth_submit-btn" type="submit" disabled={loading}>
-            SEND
-          </button>
+          <EmailInput setEmail={setEmail} />
+          <SubmitBtn text="SEND" disabled={loading} />
         </form>
         <Link className="auth_link" to={routeConstants.LOGIN_ROUTE}>
           Log in

@@ -27,7 +27,7 @@ function signup(
 function login(email: string, password: string): CallableFunction {
   return (dispatch: Dispatch): void => {
     authService.login(email, password).then((fbUser) => {
-      dbServices.getUserData(fbUser.uid).then((userData) => {
+      dbServices.getUserData(email).then((userData) => {
         const user: User = {
           fbUser,
           username: userData.username,

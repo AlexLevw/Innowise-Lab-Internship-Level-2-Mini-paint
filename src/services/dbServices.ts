@@ -4,10 +4,10 @@ import { db } from "@src/firebase";
 import { DrawingData } from "./types";
 
 async function getUserData(
-  userId: string
+  email: string
 ): Promise<firebase.firestore.DocumentData> {
   const userData = await db
-    .doc(`/users/${userId}`)
+    .doc(`/users/${email}`)
     .get()
     .then((doc) => doc.data())
     .catch(() => {

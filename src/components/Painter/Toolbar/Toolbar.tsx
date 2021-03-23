@@ -1,13 +1,13 @@
-import React from "react";
-import { painterConstants } from "@constants";
-import Cell from "./Cell/Cell";
+import React, { ReactElement } from "react";
+import { ColorTool, SizeTool, ShapesTool } from "./Tools";
 import styles from "./_styles.module.scss";
 
-export default function Toolbar(): JSX.Element {
+export default function Toolbar(): ReactElement {
   return (
     <div className={styles.toolbar}>
-      <Cell type={painterConstants.toolbarCellTypes.COLOR} />
-      <Cell type={painterConstants.toolbarCellTypes.SIZE} />
+      <ColorTool />
+      <SizeTool />
+      <ShapesTool />
     </div>
   );
 }

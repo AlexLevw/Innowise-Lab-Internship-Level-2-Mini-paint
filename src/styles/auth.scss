@@ -39,6 +39,10 @@
   border: 2px solid $dark-m;
   border-radius: 5px;
   font-size: 1em;
+
+  &.wrong {
+    background-color: rgb(255, 210, 210);
+  }
 }
 
 .auth_submit-btn {

@@ -1,0 +1,23 @@
+.panelBtn {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba($color: #000000, $alpha: .0);
+  border: 0;
+  cursor: pointer;
+
+  .RECTANGLE {
+    width: 20px;
+    height: 20px;
+    background-color: #999;
+  }
+
+  .CIRCLE {
+    width: 22px;
+    height: 22px;
+    background-color: #999;
+    border-radius: 50%;
+  }
+}

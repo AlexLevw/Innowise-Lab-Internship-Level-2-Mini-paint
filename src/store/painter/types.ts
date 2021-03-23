@@ -1,6 +1,7 @@
 export interface PainterState {
-  brushColor: string;
+  toolColor: string;
   brushSize: number;
+  toolType: string;
 }
 
 export interface PainterAction extends PainterState {

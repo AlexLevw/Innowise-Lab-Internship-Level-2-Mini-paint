@@ -15,7 +15,8 @@ export default function HomePage(): JSX.Element {
   }
 
   useEffect(() => {
-    dbServices.getImages().then((items: DrawingData[]): void => {
+    const getImagesMount = dbServices.getImages();
+    getImagesMount.then((items: DrawingData[]): void => {
       setDrawings(items);
       setFilteredDrawings(items);
     });

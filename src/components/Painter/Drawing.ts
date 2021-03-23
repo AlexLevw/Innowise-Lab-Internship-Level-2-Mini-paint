@@ -1,3 +1,5 @@
+import { painterConstants } from "@constants";
+
 export default class Drawing {
   private container: HTMLElement;
 
@@ -7,7 +9,9 @@ export default class Drawing {
 
   private isPainting: boolean;
 
-  private brushColor: string;
+  private toolType: string;
+
+  private toolColor: string;
 
   private brushSize: number;
 
@@ -25,15 +29,16 @@ export default class Drawing {
     this.ctx = ctx;
     this.canvasRect = canvas.getBoundingClientRect();
     this.isPainting = false;
-    this.brushColor = "black";
+    this.toolType = painterConstants.BRUSH;
+    this.toolColor = "black";
     this.brushSize = 10;
 
     canvas.addEventListener("mousedown", this.touch.bind(this));
     canvas.addEventListener("touchstart", this.touch.bind(this));
     canvas.addEventListener("mouseup", this.stopTouch.bind(this));
     canvas.addEventListener("touchend", this.stopTouch.bind(this));
-    canvas.addEventListener("mousemove", this.putPoint.bind(this));
-    canvas.addEventListener("touchmove", this.putPoint.bind(this));
+    canvas.addEventListener("mousemove", this.move.bind(this));
+    canvas.addEventListener("touchmove", this.move.bind(this));
 
     this.ctx.canvas.width = this.container.offsetWidth;
     this.ctx.canvas.height = this.container.offsetHeight;
@@ -43,9 +48,25 @@ export default class Drawing {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
+  public setToolColor(color: string): void {
+    this.toolColor = color;
+  }
+
+  public setBrushSize(size: number): void {
+    this.brushSize = size;
+  }
+
+  public setToolType(tool: string): void {
+    this.toolType = tool;
+  }
+
+  public getDrawingURL(): string {
+    return this.ctx.canvas.toDataURL();
+  }
+
   private touch(e: MouseEvent | TouchEvent) {
     this.isPainting = true;
-    this.putPoint(e);
+    this.move(e);
   }
 
   private stopTouch() {
@@ -53,45 +74,53 @@ export default class Drawing {
     this.ctx.beginPath();
   }
 
-  private putPoint(e: MouseEvent | TouchEvent) {
+  private move(e: MouseEvent | TouchEvent) {
     if (this.isPainting) {
-      const putPositionX =
-        (e instanceof MouseEvent ? e.clientX : e.changedTouches[0].clientX) -
-        this.canvasRect.left;
+      const { ctx, toolType, toolColor, brushSize, canvasRect } = this;
+      const { BRUSH, SHAPES } = painterConstants;
 
-      const putPositionY =
-        (e instanceof MouseEvent ? e.clientY : e.changedTouches[0].clientY) -
-        this.canvasRect.top;
+      const putPosition =
+        e instanceof MouseEvent
+          ? {
+              x: e.clientX - canvasRect.left,
+              y: e.clientY - canvasRect.top,
+            }
+          : {
+              x: e.changedTouches[0].clientX - canvasRect.left,
+              y: e.changedTouches[0].clientY - canvasRect.top,
+            };
 
-      this.ctx.lineWidth = this.brushSize;
-      this.ctx.lineTo(putPositionX, putPositionY);
-      this.ctx.strokeStyle = this.brushColor;
-      this.ctx.stroke();
-      this.ctx.beginPath();
+      ctx.strokeStyle = toolColor;
+      ctx.fillStyle = toolColor;
+      ctx.lineWidth = brushSize;
 
-      this.ctx.arc(
-        putPositionX,
-        putPositionY,
-        this.brushSize / 2,
-        0,
-        Math.PI * 2
-      );
-      this.ctx.fillStyle = this.brushColor;
-      this.ctx.fill();
-      this.ctx.beginPath();
-      this.ctx.moveTo(putPositionX, putPositionY);
+      if (toolType === BRUSH) {
+        ctx.lineTo(putPosition.x, putPosition.y);
+        ctx.stroke();
+        ctx.beginPath();
+
+        this.ctx.arc(
+          putPosition.x,
+          putPosition.y,
+          brushSize / 2,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(putPosition.x, putPosition.y);
+      } else if (toolType === SHAPES.RECTANGLE) {
+        ctx.fillRect(putPosition.x, putPosition.y, 20, 20);
+      } else if (toolType === SHAPES.CIRCLE) {
+        this.ctx.arc(
+          putPosition.x,
+          putPosition.y,
+          brushSize / 2,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+      }
     }
-  }
-
-  public setBrushColor(color: string): void {
-    this.brushColor = color;
-  }
-
-  public setBrushSize(size: number): void {
-    this.brushSize = size;
-  }
-
-  public getDrawingURL(): string {
-    return this.ctx.canvas.toDataURL();
   }
 }

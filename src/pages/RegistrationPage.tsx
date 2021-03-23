@@ -1,18 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { routeConstants } from "@constants";
-import { ErrorMessage } from "@components";
 import { authActions } from "@store/auth";
 import { CommonState } from "@store";
+import {
+  EmailInput,
+  NicknameInput,
+  PasswordInput,
+  PasswordConfirmInput,
+  SubmitBtn,
+} from "@components/auth";
 
 export default function Registration(): JSX.Element {
-  const emailRef = useRef<HTMLInputElement>({} as HTMLInputElement);
-  const usernameRef = useRef<HTMLInputElement>({} as HTMLInputElement);
-  const passwordRef = useRef<HTMLInputElement>({} as HTMLInputElement);
-  const confirmPasswordRef = useRef<HTMLInputElement>({} as HTMLInputElement);
-  const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const dispatch = useDispatch();
   const isAuthorization = useSelector(
     (state: CommonState) => state.auth.isAuthorization
@@ -20,20 +26,12 @@ export default function Registration(): JSX.Element {
 
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
-    const email: string = emailRef.current.value;
-    const username: string = usernameRef.current.value;
-    const password: string = passwordRef.current.value;
-    const passwordConfirm: string = confirmPasswordRef.current.value;
-
-    setError("");
-    if (password === passwordConfirm) {
-      setLoading(true);
-      dispatch(authActions.signup(email, username, password));
-    } else {
-      setError("Password do not match");
-      setLoading(false);
-    }
+    setIsLoading(true);
+    dispatch(authActions.signup(email, nickname, password));
   }
+
+  const hasError = !(email && nickname && password && passwordConfirm);
+  const btnDisable = hasError || isLoading;
 
   if (isAuthorization) {
     return <Redirect to={routeConstants.HOME_ROUTE} />;
@@ -41,41 +39,17 @@ export default function Registration(): JSX.Element {
 
   return (
     <div className="auth_wrap">
-      {error && <ErrorMessage massage={error} />}
       <div className="auth_container">
         <p className="auth_title">Sign up</p>
         <form className="auth_form" onSubmit={handleSubmit}>
-          <input
-            className="auth_t-input"
-            ref={emailRef}
-            type="text"
-            placeholder="e-mail"
-            required
+          <EmailInput setEmail={setEmail} />
+          <NicknameInput setNickname={setNickname} />
+          <PasswordInput setPassword={setPassword} />
+          <PasswordConfirmInput
+            password={password}
+            setPasswordConfirm={setPasswordConfirm}
           />
-          <input
-            className="auth_t-input"
-            ref={usernameRef}
-            type="text"
-            placeholder="user-name"
-            required
-          />
-          <input
-            className="auth_t-input"
-            ref={passwordRef}
-            type="password"
-            placeholder="password"
-            required
-          />
-          <input
-            className="auth_t-input"
-            ref={confirmPasswordRef}
-            type="password"
-            placeholder="confirm password"
-            required
-          />
-          <button className="auth_submit-btn" type="submit" disabled={loading}>
-            SIGNUP
-          </button>
+          <SubmitBtn text="SIGNUP" disabled={btnDisable} />
         </form>
         <div className="auth_bottom">
           <p className="auth_bottom__title">Already have an account?</p>
