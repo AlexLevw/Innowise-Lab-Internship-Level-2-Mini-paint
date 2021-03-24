@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import Drawing from "./Drawing";
+import Drawing from "./Drawing/Drawing";
 import PainterTop from "./PainterTop/PainterTop";
 import Toolbar from "./Toolbar/Toolbar";
 import styles from "./_styles.module.scss";

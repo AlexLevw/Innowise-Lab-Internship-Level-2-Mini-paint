@@ -12,7 +12,7 @@ const BRUSH_SIZES: number[] = [2, 5, 10, 20, 30, 40, 50];
 
 const SHAPES = {
   RECTANGLE: "RECTANGLE",
-  CIRCLE: "CIRCLE",
+  ELLIPSE: "ELLIPSE",
 };
 
 const BRUSH = "BRUSH";

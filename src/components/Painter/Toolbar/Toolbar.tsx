@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { ColorTool, SizeTool, ShapesTool } from "./Tools";
+import { ColorTool, SizeTool, BrushTool, ShapesTool } from "./Tools";
 import styles from "./_styles.module.scss";
 
 export default function Toolbar(): ReactElement {
@@ -7,6 +7,7 @@ export default function Toolbar(): ReactElement {
     <div className={styles.toolbar}>
       <ColorTool />
       <SizeTool />
+      <BrushTool />
       <ShapesTool />
     </div>
   );
