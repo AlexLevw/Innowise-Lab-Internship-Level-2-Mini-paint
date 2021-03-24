@@ -12,10 +12,11 @@ const BRUSH_SIZES: number[] = [2, 5, 10, 20, 30, 40, 50];
 
 const SHAPES = {
   RECTANGLE: "RECTANGLE",
-  ELLIPSE: "ELLIPSE",
+  CIRCLE: "CIRCLE",
 };
 
 const BRUSH = "BRUSH";
+const LINE = "LINE";
 
 const actions = {
   SET_COLOR: "SET_COLOR",
@@ -23,4 +24,4 @@ const actions = {
   SET_TOOL_TYPE: "SET_TOOL_TYPE",
 };
 
-export default { TOOL_COLORS, BRUSH_SIZES, SHAPES, BRUSH, actions };
+export default { TOOL_COLORS, BRUSH_SIZES, SHAPES, BRUSH, LINE, actions };

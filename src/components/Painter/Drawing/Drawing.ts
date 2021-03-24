@@ -132,6 +132,27 @@ export default class Drawing {
     ctx.moveTo(x, y);
   }
 
+  private drawLine(x: number, y: number): void {
+    const { ctx, brushSize } = this;
+
+    this.redrawCanvasImage();
+
+    ctx.beginPath();
+    ctx.moveTo(this.startTouchPosition.x, this.startTouchPosition.y);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+
+    this.ctx.arc(
+      this.startTouchPosition.x,
+      this.startTouchPosition.y,
+      brushSize / 2,
+      0,
+      Math.PI * 2
+    );
+    this.ctx.arc(x, y, brushSize / 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
   private drawRectangle(x: number, y: number): void {
     this.redrawCanvasImage();
     this.ctx.fillRect(
@@ -142,7 +163,7 @@ export default class Drawing {
     );
   }
 
-  private drawEllipse(x: number, y: number): void {
+  private drawCircle(x: number, y: number): void {
     this.redrawCanvasImage();
     const positionDifferenceX = this.startTouchPosition.x - x;
     const positionDifferenceY = this.startTouchPosition.y - y;
@@ -165,19 +186,19 @@ export default class Drawing {
 
   private move(e: MouseEvent | TouchEvent): void {
     if (this.isTouching) {
-      const { BRUSH, SHAPES } = painterConstants;
+      const { LINE, SHAPES } = painterConstants;
 
       const touchPosition: TouchPosition = this.getTouchPosition(e);
 
       switch (this.toolType) {
-        case BRUSH:
-          this.drawBrush(touchPosition.x, touchPosition.y);
+        case LINE:
+          this.drawLine(touchPosition.x, touchPosition.y);
           break;
         case SHAPES.RECTANGLE:
           this.drawRectangle(touchPosition.x, touchPosition.y);
           break;
-        case SHAPES.ELLIPSE:
-          this.drawEllipse(touchPosition.x, touchPosition.y);
+        case SHAPES.CIRCLE:
+          this.drawCircle(touchPosition.x, touchPosition.y);
           break;
         default:
           this.drawBrush(touchPosition.x, touchPosition.y);
