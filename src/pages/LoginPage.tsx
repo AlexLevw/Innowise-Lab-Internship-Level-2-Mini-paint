@@ -9,15 +9,15 @@ import { CommonState } from "@store";
 export default function Login(): JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isAuthorization = useSelector(
     (state: CommonState) => state.auth.isAuthorization
   );
+  const isLoading = useSelector((state: CommonState) => state.auth.isLoading);
 
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
-    setIsLoading(true);
+    dispatch(authActions.setIsLoading(true));
     dispatch(authActions.login(email, password));
   }
 

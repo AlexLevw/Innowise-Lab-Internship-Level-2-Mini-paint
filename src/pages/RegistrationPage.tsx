@@ -17,16 +17,17 @@ export default function Registration(): JSX.Element {
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
+
   const isAuthorization = useSelector(
     (state: CommonState) => state.auth.isAuthorization
   );
+  const isLoading = useSelector((state: CommonState) => state.auth.isLoading);
 
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
-    setIsLoading(true);
+    dispatch(authActions.setIsLoading(true));
     dispatch(authActions.signup(email, nickname, password));
   }
 

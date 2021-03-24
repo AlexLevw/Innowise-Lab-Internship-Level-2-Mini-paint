@@ -6,15 +6,17 @@ import { DrawingData } from "./types";
 async function getUserData(
   email: string
 ): Promise<firebase.firestore.DocumentData> {
-  const userData = await db
+  return db
     .doc(`/users/${email}`)
     .get()
-    .then((doc) => doc.data())
-    .catch(() => {
-      throw new Error();
+    .then((doc) => {
+      const userData = doc.data();
+      if (!userData) throw new Error("User not found!");
+      return userData;
+    })
+    .catch((err: Error) => {
+      throw new Error(err.message);
     });
-  if (!userData) throw new Error();
-  return userData;
 }
 
 async function saveImageData(
@@ -45,4 +47,20 @@ async function getImages(): Promise<DrawingData[]> {
   return images;
 }
 
-export default { getUserData, saveImageData, getImages };
+async function checkUser(email: string): Promise<boolean> {
+  let hasUser = true;
+  await db
+    .doc(`/users/${email}`)
+    .get()
+    .then((doc) => {
+      const userData = doc.data();
+      if (!userData) throw new Error("User not found!");
+      hasUser = true;
+    })
+    .catch(() => {
+      hasUser = false;
+    });
+  return hasUser;
+}
+
+export default { getUserData, saveImageData, getImages, checkUser };

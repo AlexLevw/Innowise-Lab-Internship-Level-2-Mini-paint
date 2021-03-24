@@ -3,6 +3,16 @@ import firebase from "firebase";
 import { authConstants } from "@constants";
 import { authService, dbServices } from "@services";
 import { User } from "@store/auth/types";
+import { error } from "toastr";
+
+function setIsLoading(value: boolean): CallableFunction {
+  return (dispatch: Dispatch): void => {
+    dispatch({
+      type: authConstants.SET_LOADING,
+      isLoading: value,
+    });
+  };
+}
 
 function signup(
   email: string,
@@ -10,35 +20,63 @@ function signup(
   password: string
 ): CallableFunction {
   return (dispatch: Dispatch): void => {
-    authService.signup(email, username, password).then((fbUser) => {
-      const user: User = {
-        fbUser,
-        username,
-      };
-      localStorage.setItem("user", JSON.stringify(user));
-      dispatch({
-        type: authConstants.SIGNUP,
-        user,
-      });
+    dbServices.checkUser(email).then((hasUser) => {
+      if (hasUser) {
+        error("Error while creating user!");
+        dispatch({
+          type: authConstants.SET_LOADING,
+          isLoading: false,
+        });
+      } else {
+        authService
+          .signup(email, username, password)
+          .then((fbUser) => {
+            const user: User = {
+              fbUser,
+              username,
+            };
+            localStorage.setItem("user", JSON.stringify(user));
+            dispatch({
+              type: authConstants.SIGNUP,
+              user,
+            });
+          })
+          .catch((err) => {
+            error(err.message);
+            dispatch({
+              type: authConstants.SET_LOADING,
+              isLoading: false,
+            });
+          });
+      }
     });
   };
 }
 
 function login(email: string, password: string): CallableFunction {
   return (dispatch: Dispatch): void => {
-    authService.login(email, password).then((fbUser) => {
-      dbServices.getUserData(email).then((userData) => {
-        const user: User = {
-          fbUser,
-          username: userData.username,
-        };
-        localStorage.setItem("user", JSON.stringify(user));
+    authService
+      .login(email, password)
+      .then((fbUser) => {
+        dbServices.getUserData(email).then((userData) => {
+          const user: User = {
+            fbUser,
+            username: userData.username,
+          };
+          localStorage.setItem("user", JSON.stringify(user));
+          dispatch({
+            type: authConstants.LOGIN,
+            user,
+          });
+        });
+      })
+      .catch((err: Error) => {
+        error(err.message);
         dispatch({
-          type: authConstants.LOGIN,
-          user,
+          type: authConstants.SET_LOADING,
+          isLoading: false,
         });
       });
-    });
   };
 }
 
@@ -96,4 +134,5 @@ export default {
   resetPassword,
   updateEmail,
   updatePassword,
+  setIsLoading,
 };

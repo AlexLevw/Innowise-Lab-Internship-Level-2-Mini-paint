@@ -8,9 +8,11 @@ export interface User {
 export interface AuthState {
   user: User | null;
   isAuthorization: boolean;
+  isLoading: boolean;
 }
 
 export interface Action {
   type: string;
   user: User;
+  isLoading: boolean;
 }

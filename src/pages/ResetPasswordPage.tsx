@@ -8,15 +8,16 @@ import { EmailInput, SubmitBtn } from "@components/auth";
 
 export default function ResetPassword(): JSX.Element {
   const [email, setEmail] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
+
   const isAuthorization = useSelector(
     (state: CommonState) => state.auth.isAuthorization
   );
+  const isLoading = useSelector((state: CommonState) => state.auth.isLoading);
 
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
-    setLoading(true);
+    dispatch(authActions.setIsLoading(true));
     dispatch(authActions.resetPassword(email));
   }
 
@@ -30,7 +31,7 @@ export default function ResetPassword(): JSX.Element {
         <p className="auth_title">Reset Password</p>
         <form className="auth_form" onSubmit={handleSubmit}>
           <EmailInput setEmail={setEmail} />
-          <SubmitBtn text="SEND" disabled={loading} />
+          <SubmitBtn text="SEND" disabled={isLoading} />
         </form>
         <Link className="auth_link" to={routeConstants.LOGIN_ROUTE}>
           Log in
