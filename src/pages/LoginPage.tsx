@@ -29,7 +29,7 @@ export default function Login(): JSX.Element {
   }
 
   return (
-    <div className="auth_wrap">
+    <div className="page_wrapper">
       <div className="auth_container">
         <p className="auth_title">Login</p>
         <form className="auth_form" onSubmit={handleSubmit}>

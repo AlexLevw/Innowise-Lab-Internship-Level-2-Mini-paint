@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { DrawingData } from "@services";
+import { routeConstants } from "@constants";
 import styles from "./_styles.module.scss";
 
-interface PictureBlockProps {
+interface DrawingProps {
   src: string;
   username: string;
 }
@@ -11,14 +13,20 @@ interface DrawingsViewProps {
   drawings: DrawingData[];
 }
 
-function DrawingBlock({ src, username }: PictureBlockProps): JSX.Element {
+function Drawing({ src, username }: DrawingProps): JSX.Element {
+  const history = useHistory();
+
+  function handleClick(): void {
+    history.push(`${routeConstants.DRAWING_ROUTE}#${src}`);
+  }
+
   return (
-    <div className={styles.picture}>
+    <button className={styles.picture} onClick={handleClick} type="button">
       <div className={styles.pictureImgWrapper}>
         <img src={src} alt="img" />
       </div>
       <p className={styles.pictureUsername}>{username}</p>
-    </div>
+    </button>
   );
 }
 
@@ -31,7 +39,7 @@ export default function DrawingsView({
     const images: JSX.Element[] = [];
     drawings.forEach((item): void => {
       images.push(
-        <DrawingBlock
+        <Drawing
           src={item.drawingUrl}
           username={item.username}
           key={item.drawingId}

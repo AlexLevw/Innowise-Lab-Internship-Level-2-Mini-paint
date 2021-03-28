@@ -11,20 +11,21 @@ async function signup(
     .then(async (data) => {
       if (data.user === null) {
         throw new Error("Error while creating user!");
-      } else {
-        const userId = data.user.uid;
-        const userCredentials = {
-          username,
-          userId,
-        };
-        await db
-          .doc(`/users/${email}`)
-          .set(userCredentials)
-          .catch(() => {
-            throw new Error("Error while creating user!");
-          });
-        return data.user;
       }
+
+      const userId = data.user.uid;
+      const userCredentials = {
+        username,
+        userId,
+      };
+
+      await db
+        .doc(`/users/${email}`)
+        .set(userCredentials)
+        .catch(() => {
+          throw new Error("Error while creating user!");
+        });
+      return data.user;
     })
     .catch((err) => {
       throw new Error(err);

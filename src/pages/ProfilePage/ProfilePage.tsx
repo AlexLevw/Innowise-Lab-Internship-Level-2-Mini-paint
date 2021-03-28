@@ -19,7 +19,7 @@ export default function ProfilePage(): JSX.Element {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className="page_wrapper">
       <div className={styles.container}>
         <div className={styles.main}>
           <div className={styles.main_top}>

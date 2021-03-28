@@ -5,6 +5,7 @@ import { PrivateRoute } from "@components";
 import {
   HomePage,
   PainterPage,
+  DrawingPage,
   ProfilePage,
   LoginPage,
   RegistrationPage,
@@ -38,6 +39,10 @@ export default function App(): JSX.Element {
             <PrivateRoute
               path={routeConstants.PAINTER_ROUTE}
               component={PainterPage}
+            />
+            <PrivateRoute
+              path={routeConstants.DRAWING_ROUTE}
+              component={DrawingPage}
             />
           </Switch>
         </Router>

@@ -14,9 +14,8 @@ export default function PanelWrapper({
 
   useEffect(() => {
     const tryHidePanel = (e: MouseEvent): void => {
-      if (e.target && !wrapperRef.current.contains(e.target as Element)) {
-        hidePanel();
-      }
+      if (wrapperRef.current.contains(e.target as Element)) return;
+      hidePanel();
     };
     document.addEventListener("mousedown", tryHidePanel);
     return () => document.removeEventListener("mousedown", tryHidePanel);

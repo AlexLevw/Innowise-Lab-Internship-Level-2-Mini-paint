@@ -14,17 +14,17 @@ export default function PainterTop(): JSX.Element {
   );
 
   function handleDownloadBtnClick() {
-    if (window.drawing) {
-      const drawingURL = window.drawing.getDrawingURL();
-      saveAs(drawingURL, "image");
-    }
+    if (!window.drawing) return;
+
+    const drawingURL = window.drawing.getDrawingURL();
+    saveAs(drawingURL, "image");
   }
 
   function handleSaveBtnClick(): void {
-    if (window.drawing && userId && username) {
-      const drawingURL = window.drawing.getDrawingURL();
-      dbServices.saveImageData(userId, username, drawingURL);
-    }
+    if (!(window.drawing && userId && username)) return;
+
+    const drawingURL = window.drawing.getDrawingURL();
+    dbServices.saveImageData(userId, username, drawingURL);
   }
 
   return (

@@ -26,7 +26,7 @@ export default function ResetPassword(): JSX.Element {
   }
 
   return (
-    <div className="auth_wrap">
+    <div className="page_wrapper">
       <div className="auth_container">
         <p className="auth_title">Reset Password</p>
         <form className="auth_form" onSubmit={handleSubmit}>

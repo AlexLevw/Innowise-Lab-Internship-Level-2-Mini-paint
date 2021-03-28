@@ -13,13 +13,13 @@ export default function PasswordConfirmInput({
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const { value } = e.target;
-    if (value === password) {
-      setHasError(false);
-      setPasswordConfirm(value);
-    } else {
+    if (value !== password) {
       setHasError(true);
       setPasswordConfirm("");
+      return;
     }
+    setHasError(false);
+    setPasswordConfirm(value);
   }
 
   return (

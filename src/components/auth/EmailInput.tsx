@@ -10,13 +10,13 @@ export default function EmailInput({ setEmail }: EmailInputProps): JSX.Element {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const { value } = e.target;
-    if (validator.isEmail(value)) {
-      setHasError(false);
-      setEmail(value);
-    } else {
+    if (!validator.isEmail(value)) {
       setHasError(true);
       setEmail("");
+      return;
     }
+    setHasError(false);
+    setEmail(value);
   }
 
   return (

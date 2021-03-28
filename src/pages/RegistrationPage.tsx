@@ -39,7 +39,7 @@ export default function Registration(): JSX.Element {
   }
 
   return (
-    <div className="auth_wrap">
+    <div className="page_wrapper">
       <div className="auth_container">
         <p className="auth_title">Sign up</p>
         <form className="auth_form" onSubmit={handleSubmit}>

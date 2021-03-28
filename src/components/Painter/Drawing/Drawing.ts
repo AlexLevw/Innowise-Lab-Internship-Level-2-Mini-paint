@@ -185,24 +185,23 @@ export default class Drawing {
   }
 
   private move(e: MouseEvent | TouchEvent): void {
-    if (this.isTouching) {
-      const { LINE, SHAPES } = painterConstants;
+    if (!this.isTouching) return;
 
-      const touchPosition: TouchPosition = this.getTouchPosition(e);
+    const { LINE, SHAPES } = painterConstants;
+    const touchPosition: TouchPosition = this.getTouchPosition(e);
 
-      switch (this.toolType) {
-        case LINE:
-          this.drawLine(touchPosition.x, touchPosition.y);
-          break;
-        case SHAPES.RECTANGLE:
-          this.drawRectangle(touchPosition.x, touchPosition.y);
-          break;
-        case SHAPES.CIRCLE:
-          this.drawCircle(touchPosition.x, touchPosition.y);
-          break;
-        default:
-          this.drawBrush(touchPosition.x, touchPosition.y);
-      }
+    switch (this.toolType) {
+      case LINE:
+        this.drawLine(touchPosition.x, touchPosition.y);
+        break;
+      case SHAPES.RECTANGLE:
+        this.drawRectangle(touchPosition.x, touchPosition.y);
+        break;
+      case SHAPES.CIRCLE:
+        this.drawCircle(touchPosition.x, touchPosition.y);
+        break;
+      default:
+        this.drawBrush(touchPosition.x, touchPosition.y);
     }
   }
 }

@@ -21,13 +21,15 @@ export default function PasswordInput({
     if (validate && validator.isStrongPassword(value)) {
       setHasError(false);
       setPassword(value);
-    } else if (value) {
+      return;
+    }
+    if (value) {
       setHasError(false);
       setPassword(value);
-    } else {
-      setHasError(true);
-      setPassword("");
+      return;
     }
+    setHasError(true);
+    setPassword("");
   }
 
   return (

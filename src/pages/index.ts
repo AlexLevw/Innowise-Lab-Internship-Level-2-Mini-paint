@@ -1,9 +1,10 @@
-import HomePage from "./HomePage/HomePage";
+import HomePage from "./HomePage";
 import ProfilePage from "./ProfilePage/ProfilePage";
 import LoginPage from "./LoginPage";
 import RegistrationPage from "./RegistrationPage";
 import ResetPasswordPage from "./ResetPasswordPage";
-import PainterPage from "./PainterPage/PainterPage";
+import PainterPage from "./PainterPage";
+import DrawingPage from "./DrawingPage";
 
 export {
   HomePage,
@@ -12,4 +13,5 @@ export {
   RegistrationPage,
   ResetPasswordPage,
   PainterPage,
+  DrawingPage,
 };

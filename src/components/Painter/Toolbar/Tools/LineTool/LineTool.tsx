@@ -13,9 +13,8 @@ export default function LineTool(): JSX.Element {
   const isActive = toolType === painterConstants.LINE;
 
   function handleClick() {
-    if (!isActive) {
-      dispatch(painterActions.setToolType(painterConstants.LINE));
-    }
+    if (isActive) return;
+    dispatch(painterActions.setToolType(painterConstants.LINE));
   }
 
   return (

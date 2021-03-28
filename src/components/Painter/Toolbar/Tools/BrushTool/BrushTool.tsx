@@ -14,9 +14,8 @@ export default function BrushTool(): ReactElement {
   const isActive = toolType === painterConstants.BRUSH;
 
   function handleClick() {
-    if (!isActive) {
-      dispatch(painterActions.setToolType(painterConstants.BRUSH));
-    }
+    if (isActive) return;
+    dispatch(painterActions.setToolType(painterConstants.BRUSH));
   }
 
   return (
