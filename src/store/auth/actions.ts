@@ -5,6 +5,14 @@ import { authService, dbServices } from "@services";
 import { User } from "@store/auth/types";
 import { error } from "toastr";
 
+function switchTheme(): CallableFunction {
+  return (dispatch: Dispatch): void => {
+    dispatch({
+      type: authConstants.SWITCH_THEME,
+    });
+  };
+}
+
 function setIsLoading(value: boolean): CallableFunction {
   return (dispatch: Dispatch): void => {
     dispatch({
@@ -128,11 +136,12 @@ function updatePassword(
 }
 
 export default {
+  switchTheme,
+  setIsLoading,
   signup,
   login,
   logout,
   resetPassword,
   updateEmail,
   updatePassword,
-  setIsLoading,
 };

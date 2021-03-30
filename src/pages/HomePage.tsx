@@ -6,7 +6,7 @@ export default function HomePage(): JSX.Element {
   const [drawings, setDrawings] = useState<DrawingData[]>([]);
   const [filteredDrawings, setFilteredDrawings] = useState<DrawingData[]>([]);
 
-  function filterDrawingsByUser(username: string) {
+  function filterDrawingsByUser(username: string): void {
     const filtered: DrawingData[] = drawings.filter((item): boolean =>
       item.username.includes(username)
     );

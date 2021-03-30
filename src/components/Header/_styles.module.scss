@@ -52,3 +52,17 @@
     filter: invert(75%);
   }
 }
+
+:global(.light) {
+  .link {
+    a {
+      color: $dark;
+    }
+  }
+
+  .profileLink {
+    img {
+      filter: none;
+    }
+  }
+}

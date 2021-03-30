@@ -1,3 +1,5 @@
+@import "@styles/colors";
+
 .container {
   width: 100%;
   height: 100%;
@@ -15,7 +17,7 @@
   margin: 10px;
   border: 2px solid #111;
   border-radius: 10px;
-  background-color: #333;
+  background-color: $dark-m;
   overflow: hidden;
   transition: all .3s;
   cursor: pointer;
@@ -47,6 +49,22 @@
   margin: 0 0 10px;
   padding: 0;
   text-align: center;
+}
+
+:global(.light) {
+  .picture {
+    border-color: $dark-l;
+    background-color: $light;
+
+    &:hover {
+      border-color: #888;
+      background-color: $light-m;
+    }
+  }
+
+  .pictureUsername {
+    color: $dark;
+  }
 }
 
 @media (max-width: 680px) {

@@ -1,5 +1,6 @@
 import React from "react";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { routeConstants } from "@constants";
 import { PrivateRoute } from "@components";
 import {
@@ -11,11 +12,14 @@ import {
   RegistrationPage,
   ResetPasswordPage,
 } from "@pages";
+import { CommonState } from "@store";
 
 export default function App(): JSX.Element {
+  const theme = useSelector((state: CommonState) => state.auth.theme);
+
   return (
-    <div className="App">
-      <div className="App_main">
+    <div className={`App ${theme}`}>
+      <div className="App__main">
         <Router>
           <Switch>
             <Route path={routeConstants.LOGIN_ROUTE} component={LoginPage} />

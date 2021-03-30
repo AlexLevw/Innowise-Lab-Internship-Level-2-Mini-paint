@@ -18,11 +18,15 @@ export default function ProfilePage(): JSX.Element {
     history.push(routeConstants.LOGIN_ROUTE);
   }
 
+  function handleThemeBtnClick(): void {
+    dispatch(authActions.switchTheme());
+  }
+
   return (
     <div className="page_wrapper">
       <div className={styles.container}>
         <div className={styles.main}>
-          <div className={styles.main_top}>
+          <div className={styles.mainTop}>
             <p className={styles.username}>{username}</p>
             <button
               className={styles.logoOutBtn}
@@ -30,6 +34,15 @@ export default function ProfilePage(): JSX.Element {
               onClick={handleLogOut}
             >
               Log out
+            </button>
+          </div>
+          <div className={styles.mainCenter}>
+            <button
+              className={styles.switchThemeBtn}
+              type="button"
+              onClick={handleThemeBtnClick}
+            >
+              Switch theme
             </button>
           </div>
         </div>
